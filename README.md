@@ -1,11 +1,14 @@
-# ROS installation and setup for Bluerovs
+# ROS installation and setup for BlueROVs
+
+Tested with:
+- Ubuntu 18.04.6 LTS with ROS Melodic 1.14.13 paired with Brice on 23/05/2024
 
 ## ROS install
 
 Following [this](http://wiki.ros.org/Installation/Ubuntu) tutorial.
 
 1. run `sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'`
-2. if do not have it already, install curl: `sudo apt install curl`
+2. install curl if necessary: `sudo apt install curl`
 3. run `curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -`
 4. run `sudo apt update`
 5. run `sudo apt install ros-melodic-desktop-full`
@@ -18,9 +21,9 @@ Following [this](http://wiki.ros.org/Installation/Ubuntu) tutorial.
 
 ## Catkin setup
 
-for COSMER blueROVs (as of 2024) we need to make modification to the mavros code thus we install mavros and mavlink from source.
+for COSMER blueROVs (as of 2024) we need to make modification to the mavros code because the on-board verstion of ROS requires it, thus we install mavros and mavlink from source.
 
-1. create a catkin directory: `mkdir -p catkin/src` and go into that directory `cd catkin`
+1. create a catkin directory: `mkdir -p catkin/src` and go into that directory: `cd catkin`
 2. run `wstool init src`
 3. install mavros and mavlink:
    - `rosinstall_generator --upstream mavros | tee /tmp/mavros.rosinstall`
@@ -34,5 +37,5 @@ for COSMER blueROVs (as of 2024) we need to make modification to the mavros code
    - at `mavros/mavros/src/plugin/sys_status.cpp:1200` replace `mode_sent` with `success` 
    - at `mavros/mavros/src/plugin/sys_status.cpp:1220` replace `mode_sent` with `success` 
    - at `mavros/mavros_msgs/msg/OverrideRCIn.msg:9` replace `uint16[18]` with `uint16[8]` 
-6. rebuild `catkin build`
+6. rebuild: `catkin build`
    
