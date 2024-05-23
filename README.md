@@ -18,15 +18,21 @@ Following [this](http://wiki.ros.org/Installation/Ubuntu) tutorial.
 
 ## Catkin setup
 
-Following [this](http://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment) tutorial.
+for COSMER blueROVs (as of 2024) we need to make modification to the mavros code thus we install mavros and mavlink from source.
 
-1. create a working directory, for example: `mkdir -p ~/catkin_ws/src && cd ~/catkin_ws/`
-2. build the catkin worspace: `catkin_make`
-3. add either:
-   - `source devel/setup.bash` to `~/.bashrc`
-   - `source devel/setup.zsh` to `~/.zshrc`
-
-## Other setup
-
-- `sudo apt install ros-melodic-mavros`
-- `sudo apt install ros-melodic-joy`
+1. create a catkin directory: `mkdir -p catkin/src` and go into that directory `cd catkin`
+2. run `wstool init src`
+3. install mavros and mavlink:
+   - `rosinstall_generator --upstream mavros | tee /tmp/mavros.rosinstall`
+   - `rosinstall_generator mavlink | tee -a /tmp/mavros.rosinstall`
+   - `wstool merge -t src /tmp/mavros.rosinstall`
+   - `wstool update -t src`
+   - `wstool update`
+4. once that is done you can do a build: `catkin build` if the build fails you may need to install pip `sudo apt install python-pip` and the future python library `pip install future`
+5. now the code modification:
+   - at `mavros/mavros_msgs/srv/SetMode.srv:22` replace `mode_sent` with `success` 
+   - at `mavros/mavros/src/plugin/sys_status.cpp:1200` replace `mode_sent` with `success` 
+   - at `mavros/mavros/src/plugin/sys_status.cpp:1220` replace `mode_sent` with `success` 
+   - at `mavros/mavros_msgs/msg/OverrideRCIn.msg:9` replace `uint16[18]` with `uint16[8]` 
+6. rebuild `catkin build`
+   
