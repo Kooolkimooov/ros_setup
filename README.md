@@ -43,7 +43,7 @@ sudo rosdep init && rosdep update
 
 ## Catkin setup
 
-for COSMER blueROVs (as of 2024) we need to make modification to the mavros code because the on-board verstion of ROS requires it, thus we **install mavros and mavlink from source**.
+for COSMER blueROVs (as of 2024) we need to make modification to the mavros code because the on-board version of ROS requires it, thus we **install mavros and mavlink from source**.
 
 1. create a catkin directory: 
 ```bash
