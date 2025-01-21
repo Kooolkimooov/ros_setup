@@ -31,7 +31,7 @@ sed -i '1i source /opt/ros/noetic/setup.bash' ~/.bashrc # if you are on Ubuntu 2
 3. source your `~/.bashrc`.
 4. install dependencies for building packages: 
 ```bash
-sudo apt install python-rosdep python-rosinstall python-rosinstall-generator python-wstool python-catkin-tools build-essential - y # if you are on Ubuntu 18
+sudo apt install python-rosdep python-rosinstall python-rosinstall-generator python-wstool python-catkin-tools build-essential -y # if you are on Ubuntu 18
 ```
 ```bash
 sudo apt install python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool python3-catkin-tools build-essential -y # if you are on Ubuntu 20
@@ -43,7 +43,7 @@ sudo rosdep init && rosdep update
 
 ## Catkin setup
 
-For COSMER blueROVs (as of 23/05/2024) we need to make modification to the mavros code because the on-board version of ROS requires it, thus we **install mavros and mavlink from source**.
+With a new terminal (this is to allow the `setup.bash` to be sourced).
 
 1. create a catkin directory: 
 ```bash
@@ -51,7 +51,7 @@ mkdir -p catkin/src && cd catkin
 ```
 2. build and add catkin to `.bashrc`:
 ```bash
-catkin build && sed -i '1i source ~/catkin/devel/setup.bash' ~/.bashrc
+catkin build && sed -i '2i source ~/catkin/devel/setup.bash' ~/.bashrc
 ``` 
 3. source your `~/.bashrc`.
 4. install mavros dependencies: 
@@ -61,6 +61,9 @@ sudo apt install ros-melodic-geographic-msgs libgeographic-dev -y # if you are o
 ```bash
 sudo apt install ros-noetic-geographic-msgs libgeographic-dev -y # if you are on Ubuntu 20
 ```
+
+For COSMER blueROVs (as of 23/05/2024) we need to make modification to the mavros code because the on-board version of ROS requires it, thus we **install mavros and mavlink from source**.
+
 5. install mavros and mavlink:
 ```bash
 wstool init src &&
